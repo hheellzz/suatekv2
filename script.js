@@ -70,4 +70,17 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
   });
+
+  // Animate slider images when in view
+  document.querySelectorAll('.slider-flex img').forEach(img => {
+    const obs = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    obs.observe(img);
+  });
 });
