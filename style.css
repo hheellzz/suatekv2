@@ -87,6 +87,9 @@ nav a:hover {
   height: 32px;
   cursor: pointer;
   z-index: 200;
+  border: none;
+  background: none;
+  outline: none;
 }
 .bar {
   height: 4px;
@@ -107,7 +110,10 @@ nav a:hover {
 }
 /* Mobile Nav */
 @media (max-width: 900px) {
-  nav ul {
+  .header-flex {
+    flex-wrap: wrap;
+  }
+  nav {
     position: fixed;
     top: 0;
     right: -100vw;
@@ -117,16 +123,23 @@ nav a:hover {
     flex-direction: column;
     gap: 38px;
     padding-top: 90px;
-    transition: right 0.4s;
+    transition: right 0.4s cubic-bezier(.77,0,.18,1);
     box-shadow: -2px 0 12px rgba(0,0,0,0.07);
     z-index: 150;
+    align-items: flex-start;
+    display: flex;
   }
-  nav ul.active {
+  nav.open {
     right: 0;
   }
+  nav ul {
+    flex-direction: column;
+    gap: 38px;
+    width: 100%;
+    padding-left: 24px;
+  }
   .cta-btn {
-    margin-left: 0;
-    margin-top: 20px;
+    display: none;
   }
   .hamburger {
     display: flex;
