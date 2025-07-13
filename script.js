@@ -37,4 +37,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     autoScroll();
   }
+
+  document.querySelectorAll('.stats-flex h3').forEach(el => {
+    const target = +el.textContent.replace(/\D/g, '');
+    if (!target) return;
+    let count = 0;
+    const duration = 1200;
+    const step = Math.ceil(target / (duration / 16));
+    function update() {
+      count += step;
+      if (count >= target) {
+        el.textContent = target + (el.textContent.includes('%') ? '%' : '+');
+      } else {
+        el.textContent = count + (el.textContent.includes('%') ? '%' : '+');
+        requestAnimationFrame(update);
+      }
+    }
+    update();
+  });
+
+  document.querySelectorAll('.fade-in').forEach(el => {
+    el.style.opacity = 0;
+  });
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => {
+    observer.observe(el);
+  });
 });
