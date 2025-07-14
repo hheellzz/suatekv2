@@ -33,6 +33,12 @@ header {
   padding: 18px 0;
   position: relative;
 }
+/* Hide only the header CTA button on mobile */
+@media (max-width: 900px) {
+  .header-flex > .cta-btn {
+    display: none;
+  }
+}
 .logo {
   display: flex;
   align-items: center;
@@ -138,9 +144,6 @@ nav a:hover {
     width: 100%;
     padding-left: 24px;
   }
-  .cta-btn {
-    display: none;
-  }
   .hamburger {
     display: flex;
   }
@@ -241,8 +244,8 @@ nav a:hover {
 .about-text h2 {
   color: var(--primary);
   margin-bottom: 12px;
-  font-size: 1.5em;
-  font-weight: 700;
+  font-size: 1.7em;
+  font-weight: 750;
 }
 .about-text ul {
   margin: 15px 0;
