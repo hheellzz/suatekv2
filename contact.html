@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Suatek Engineering Nigeria Limited</title>
+    <link rel="stylesheet" href="contact.css">
+</head>
+<body>
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container header-flex">
+      <div class="logo">
+        <img src="assets/logo.jpg" alt="Suatek Logo">
+        <span>Suatek Engineering Nigeria Limited</span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+      </button>
+      <nav>
+        <ul id="main-nav">
+          <li><a href="index.html#home" class="active">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#departments">Departments</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="cta-btn">Contact Us</a>
+    </div>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container contact-flex">
+      <div class="contact-info">
+        <h2>Contact Us</h2>
+        <p>Have a project in mind or need more info? Reach out to our team:</p>
+        <ul>
+          <li><strong>Phone:</strong> +234 800 000 0000</li>
+          <li><strong>Email:</strong> info@suatekengineering.com</li>
+          <li><strong>Address:</strong> 123 Industrial Lane, Lagos, Nigeria</li>
+        </ul>
+      </div>
+      <form class="contact-form" id="contactForm" novalidate>
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+        <p class="form-message" id="formMessage"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-flex">
+      <div class="footer-logo">
+        <img src="assets/logo.jpg" alt="Suatek Logo">
+        <p>Suatek Multi-Link Engineering Nigeria Limited<br>.....installation beyond expectation.....</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#departments">Departments</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>+234 806 078 2780<br>suatekengrsales@gmail.com</p>
+        <form>
+          <input type="email" placeholder="Subscribe to newsletter" aria-label="Email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Suatek Multi-Link Engineering Nigeria Limited. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

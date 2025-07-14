@@ -70,6 +70,12 @@ nav a {
 nav a:hover {
   color: var(--primary);
 }
+nav a.active,
+nav a:active {
+  color: #b11e23;
+  font-weight: 700;
+  border-bottom: 2px solid #b11e23;
+}
 .cta-btn {
   background: var(--primary);
   color: var(--light);

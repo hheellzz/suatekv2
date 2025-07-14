@@ -83,4 +83,42 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.1 });
     obs.observe(img);
   });
+
+  // Contact form validation and feedback
+  const form = document.getElementById('contactForm');
+  const formMessage = document.getElementById('formMessage');
+
+  if (form && formMessage) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Simple validation
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+
+      if (!name || !email || !message) {
+        formMessage.style.color = 'red';
+        formMessage.textContent = 'Please fill in all fields.';
+        formMessage.style.display = 'block';
+        return;
+      }
+
+      // Basic email format check
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        formMessage.style.color = 'red';
+        formMessage.textContent = 'Please enter a valid email address.';
+        formMessage.style.display = 'block';
+        return;
+      }
+
+      // Here you would normally send data to your server...
+      // For now, just show success message and reset form:
+      formMessage.style.color = 'green';
+      formMessage.textContent = 'Thank you for contacting us! We will get back to you soon.';
+      formMessage.style.display = 'block';
+      form.reset();
+    });
+  }
 });
