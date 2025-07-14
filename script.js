@@ -1,23 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const hamburger = document.querySelector('.hamburger');
+  const hamburger = document.getElementById('hamburger');
   const nav = document.querySelector('nav');
 
-  hamburger.addEventListener('click', function() {
-    hamburger.classList.toggle('active');
-    nav.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', nav.classList.contains('open'));
-  });
-
-  // Optional: Close nav when a link is clicked (mobile UX)
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (nav.classList.contains('open')) {
-        nav.classList.remove('open');
-        hamburger.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
+  if (hamburger && nav) {
+    hamburger.addEventListener('click', function() {
+      nav.classList.toggle('open');
+      hamburger.classList.toggle('active');
+      // Optionally, close nav when a link is clicked (for mobile UX)
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('open');
+          hamburger.classList.remove('active');
+        });
+      });
     });
-  });
+  }
 
   // Auto-scroll for slider
   const slider = document.querySelector('.slider-flex');
@@ -121,4 +118,36 @@ document.addEventListener('DOMContentLoaded', function() {
       form.reset();
     });
   }
+
+  // Dynamic active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#main-nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 80; // adjust offset for header height
+      if (pageYOffset >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      link.removeAttribute('aria-current');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+  });
+
+  window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
+    if (window.scrollY > 10) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+  });
 });
