@@ -24,9 +24,9 @@ html {
 }
 /* Header & Navigation */
 header {
-  background: black;
+  background: var(--light);
   border-bottom: 1px solid #eee;
-  position: relative;
+  position: sticky;
   top: 0;
   z-index: 100;
 }
