@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Auto-scroll for slider
   const slider = document.querySelector('.slider-flex');
   if (slider) {
-    const SCROLL_SPEED = 0.5; // Slower speed
+    const SCROLL_SPEED = 1; // Slower speed
     let direction = 1;
     let paused = false;
     let rafId = null;
