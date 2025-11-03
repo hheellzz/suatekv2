@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Suatek Engineering Nigeria Limited</title>
-    <link rel="stylesheet" href="contact.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact Us - Suatek Multi-Link Engineering Nigeria Limited</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="contact.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div id="home"></div>
+
   <!-- Header & Navigation -->
   <header>
     <div class="container header-flex">
       <div class="logo">
-        <img src="assets/logo.jpg" alt="Suatek Logo">
+        <img src="assets/logo.jpg" alt="Suatek Logo" loading="lazy">
         <span>Suatek Engineering Nigeria Limited</span>
       </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+        <div class="bar bar1"></div>
+        <div class="bar bar2"></div>
+        <div class="bar bar3"></div>
+      </button>
+
       <nav>
         <ul id="main-nav">
           <li><a href="index.html#home">Home</a></li>
@@ -23,63 +34,71 @@
           <li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
         </ul>
       </nav>
+
       <a href="contact.html" class="cta-btn">Contact Us</a>
-      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
-        <div class="bar bar1"></div>
-        <div class="bar bar2"></div>
-        <div class="bar bar3"></div>
-      </button>
     </div>
   </header>
 
   <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <div class="container contact-flex">
-      <div class="contact-info">
-        <h2>Contact Us</h2>
-        <p>Have a project in mind or need more info? Reach out to our team:</p>
-        <ul>
-          <li><strong>Phone:</strong> +234 806 078 2780</li>
-          <li><strong>Email:</strong> suatekengrsales@gmail.com</li>
-          <li><strong>Address:</strong> Suit 1, first floor Odudu Plaza, Isaac Boro Expressway, Okaka, Yenagoa, Bayelsa state, Nigeria</li>
-        </ul>
+  <main>
+    <section class="contact" id="contact">
+      <div class="container contact-flex">
+        <div class="contact-info">
+          <h2>Contact Us</h2>
+          <p>Have a project in mind or need more info? Reach out and we'll respond quickly.</p>
+          <ul>
+            <li><strong>Phone:</strong> +234 806 078 2780</li>
+            <li><strong>Email:</strong> suatekengrsales@gmail.com</li>
+            <li><strong>Address:</strong> Suit 1, 1st floor Odudu Plaza, Isaac Boro Expressway, Okaka, Yenagoa, Bayelsa</li>
+          </ul>
+          <div class="map-placeholder" aria-hidden="true">[Map placeholder — embed Google Maps here]</div>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000">
+
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" placeholder="Describe your project or question" rows="6" required></textarea>
+
+          <div class="form-actions">
+            <button type="submit" class="cta-btn">Send Message</button>
+          </div>
+
+          <p class="form-message" id="formMessage" aria-live="polite" role="status"></p>
+        </form>
       </div>
-      <form class="contact-form" id="contactForm" novalidate>
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" placeholder="Your Name" required>
+    </section>
+  </main>
 
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" placeholder="Your Email" required>
-
-        <label for="message">Your Message</label>
-        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-
-        <button type="submit">Send Message</button>
-        <p class="form-message" id="formMessage"></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- Footer (matches index.html) -->
   <footer>
     <div class="container footer-flex">
       <div class="footer-logo">
-        <img src="assets/logo.jpg" alt="Suatek Logo">
+        <img src="assets/logo.jpg" alt="Suatek Logo" loading="lazy">
         <p>Suatek Multi-Link Engineering Nigeria Limited<br>.....installation beyond expectation.....</p>
       </div>
+
       <div class="footer-links">
         <h4>Quick Links</h4>
         <ul>
           <li><a href="index.html#about">About</a></li>
           <li><a href="index.html#services">Services</a></li>
           <li><a href="index.html#departments">Departments</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
         </ul>
       </div>
+
       <div class="footer-contact">
         <h4>Contact</h4>
         <p>+234 806 078 2780<br>suatekengrsales@gmail.com</p>
-        <form>
+        <form class="newsletter" onsubmit="return false;">
           <input type="email" placeholder="Subscribe to newsletter" aria-label="Email address" required>
           <button type="submit">Subscribe</button>
         </form>

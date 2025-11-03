@@ -3,16 +3,31 @@ document.addEventListener('DOMContentLoaded', function() {
   const nav = document.querySelector('nav');
 
   if (hamburger && nav) {
-    hamburger.addEventListener('click', function() {
+    hamburger.addEventListener('click', () => {
       nav.classList.toggle('open');
       hamburger.classList.toggle('active');
-      // Optionally, close nav when a link is clicked (for mobile UX)
-      nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+      const expanded = hamburger.classList.contains('active');
+      hamburger.setAttribute('aria-expanded', expanded.toString());
+    });
+
+    // Close mobile nav after clicking a link
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (nav.classList.contains('open')) {
           nav.classList.remove('open');
           hamburger.classList.remove('active');
-        });
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
       });
+    });
+
+    // Close with Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
@@ -53,20 +68,42 @@ document.addEventListener('DOMContentLoaded', function() {
     update();
   });
 
-  document.querySelectorAll('.fade-in').forEach(el => {
-    el.style.opacity = 0;
-  });
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animated');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-  });
+  // Fade-in on scroll only for first visit in this session
+  (function() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const targets = document.querySelectorAll('.fade-in, .stagger');
+
+    if (!targets.length) return;
+
+    // If user prefers reduced motion or we've visited before, reveal immediately
+    if (prefersReduced || sessionStorage.getItem('visited')) {
+      targets.forEach(el => {
+        // if stagger, reveal children too
+        if (el.classList.contains('stagger')) {
+          el.classList.add('animated');
+          el.querySelectorAll('*').forEach(ch => ch.style.opacity = '1');
+        } else {
+          el.classList.add('animated');
+        }
+      });
+      sessionStorage.setItem('visited', 'true');
+      return;
+    }
+
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    targets.forEach(el => io.observe(el));
+
+    // mark visited so next page load won't animate
+    sessionStorage.setItem('visited', 'true');
+  })();
 
   // Animate slider images when in view
   document.querySelectorAll('.slider-flex img').forEach(img => {
@@ -81,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
     obs.observe(img);
   });
 
-  // Contact form validation and feedback
+  // Contact form handling (idempotent — integrates with existing validation)
   const form = document.getElementById('contactForm');
   const formMessage = document.getElementById('formMessage');
 
@@ -89,19 +126,17 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Simple validation
       const name = form.name.value.trim();
       const email = form.email.value.trim();
       const message = form.message.value.trim();
 
       if (!name || !email || !message) {
         formMessage.style.color = 'red';
-        formMessage.textContent = 'Please fill in all fields.';
+        formMessage.textContent = 'Please fill in all required fields.';
         formMessage.style.display = 'block';
         return;
       }
 
-      // Basic email format check
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         formMessage.style.color = 'red';
@@ -110,10 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // Here you would normally send data to your server...
-      // For now, just show success message and reset form:
+      // Replace with real submission endpoint as needed
       formMessage.style.color = 'green';
-      formMessage.textContent = 'Thank you for contacting us! We will get back to you soon.';
+      formMessage.textContent = 'Thanks — your message has been received.';
       formMessage.style.display = 'block';
       form.reset();
     });
