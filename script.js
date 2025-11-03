@@ -31,6 +31,91 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Keyboard & click accessible mega menu handling
+  (function() {
+    const menuToggles = Array.from(document.querySelectorAll('.menu-toggle'));
+    const megas = Array.from(document.querySelectorAll('.mega'));
+
+    if (!menuToggles.length || !megas.length) return;
+
+    // Initialize state
+    megas.forEach(m => m.setAttribute('aria-hidden', 'true'));
+    menuToggles.forEach(t => t.setAttribute('aria-expanded', 'false'));
+
+    // Helper to close all
+    function closeAllMegas() {
+      megas.forEach(m => m.setAttribute('aria-hidden', 'true'));
+      menuToggles.forEach(t => t.setAttribute('aria-expanded', 'false'));
+    }
+
+    // Toggle handler
+    menuToggles.forEach(toggle => {
+      const parent = toggle.closest('.has-mega');
+      if (!parent) return;
+      const mega = parent.querySelector('.mega');
+      if (!mega) return;
+
+      toggle.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        const isMobile = window.matchMedia('(max-width: 900px)').matches || (nav && nav.classList.contains('open'));
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+
+        if (isMobile) {
+          // On mobile / slide-in nav: toggle submenu inside nav (collapsed behavior)
+          parent.classList.toggle('submenu-open', !open);
+          toggle.setAttribute('aria-expanded', String(!open));
+          mega.setAttribute('aria-hidden', String(open));
+          if (!open) {
+            const firstLink = mega.querySelector('a');
+            if (firstLink) firstLink.focus();
+          }
+          return;
+        }
+
+        // Desktop: full mega behavior (only one open at a time)
+        if (open) {
+          mega.setAttribute('aria-hidden', 'true');
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          closeAllMegas();
+          mega.setAttribute('aria-hidden', 'false');
+          toggle.setAttribute('aria-expanded', 'true');
+          // Move focus into first link in mega for keyboard users
+          const firstLink = mega.querySelector('a');
+          if (firstLink) firstLink.focus();
+        }
+      });
+
+      // Keyboard open (Enter / Space)
+      toggle.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          toggle.click();
+        }
+      });
+
+      // Close mega with Escape when focus inside
+      mega.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Escape') {
+          closeAllMegas();
+          toggle.focus();
+        }
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (ev) => {
+      if (!ev.target.closest('.has-mega')) {
+        closeAllMegas();
+      }
+    });
+
+    // Close all on Escape global
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') closeAllMegas();
+    });
+  })();
+
   // Auto-scroll for slider
   const slider = document.querySelector('.slider-flex');
   if (slider) {
