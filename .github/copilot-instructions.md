@@ -13,7 +13,7 @@
 
 ### Editing patterns and examples (copy-paste friendly)
 
-- To add a new nav link: update both `index.html` and `contact.html` `#main-nav` lists and ensure mobile close behavior remains (links inside `nav` are closed by `script.js`).
+- To add a new nav link: update both `index.html` and `contact.html` `main-nav` lists and ensure mobile close behavior remains (links inside `nav` are closed by `script.js`).
 
 - To add a new slider image: add an `<img>` inside `.slider-flex` in `index.html` and place the file under `assets/`. `script.js` will automatically animate it via IntersectionObserver.
 
