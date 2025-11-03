@@ -34,19 +34,50 @@ document.addEventListener('DOMContentLoaded', function() {
   // Auto-scroll for slider
   const slider = document.querySelector('.slider-flex');
   if (slider) {
-    let scrollAmount = 1.0; // pixels per frame
-    let direction = 1; // 1 = right, -1 = left
+    const SCROLL_SPEED = 0.5; // Slower speed
+    let direction = 1;
+    let paused = false;
+    let rafId = null;
 
     function autoScroll() {
-      if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth) {
-        direction = -1; // reverse direction at end
-      } else if (slider.scrollLeft <= 0) {
-        direction = 1; // reverse direction at start
+      if (!paused && !document.hidden) {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        const currentScroll = slider.scrollLeft;
+        
+        // Precise end detection
+        if (currentScroll <= 0) {
+          direction = 1; // Start moving right
+        } else if (currentScroll >= maxScroll) {
+          direction = -1; // Start moving left
+        }
+
+        // Smooth scrolling
+        slider.scrollLeft += SCROLL_SPEED * direction;
       }
-      slider.scrollLeft += scrollAmount * direction;
-      requestAnimationFrame(autoScroll);
+      rafId = requestAnimationFrame(autoScroll);
     }
 
+    function setPaused(val) {
+      paused = !!val;
+    }
+
+    // Pause on hover/touch
+    slider.addEventListener('mouseenter', () => setPaused(true));
+    slider.addEventListener('mouseleave', () => setPaused(false));
+    slider.addEventListener('touchstart', () => setPaused(true), { passive: true });
+    slider.addEventListener('touchend', () => setPaused(false));
+
+    // Pause when tab inactive
+    document.addEventListener('visibilitychange', () => {
+      setPaused(document.hidden);
+    });
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    });
+
+    // Start scrolling
     autoScroll();
   }
 
